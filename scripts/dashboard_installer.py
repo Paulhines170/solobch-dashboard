@@ -48,7 +48,18 @@ def dashboard_node(tree):
 def status_fingerprint(source):
     tree = ast.parse(source)
     tree.body.remove(dashboard_node(tree))
-    return digest(ast.dump(tree, include_attributes=False).encode())
+    def canonical(value):
+        if isinstance(value, ast.AST):
+            # Python 3.12 added empty type_params to ordinary definitions.
+            # Keep nonempty parameters and every other semantic field.
+            return [type(value).__name__, [[name, canonical(item)]
+                    for name, item in ast.iter_fields(value)
+                    if not (name == 'type_params' and item == [])]]
+        if isinstance(value, list):
+            return [canonical(item) for item in value]
+        return [type(value).__name__, repr(value)]
+    return digest(json.dumps(canonical(tree), ensure_ascii=True,
+                             separators=(',', ':')).encode())
 
 
 def patch(sources, html, compatibility):
