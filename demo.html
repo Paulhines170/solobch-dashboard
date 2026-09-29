@@ -1,0 +1,119 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SoloBCH Dashboard — Offline Demo</title><style>body{margin:0;background:#000}#bch-preview{max-width:1200px;margin:auto}#bch-preview [hidden]{display:none!important}.dashboard-nav{display:flex;gap:8px;margin:18px 0 22px;padding-bottom:14px;border-bottom:1px solid #25302b}#bch-preview .dashboard-nav button{padding:10px 18px;font-size:14px}#bch-preview #share-chart{height:315px}
+#bch-preview .history-metrics{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:18px 0}
+#bch-preview .history-metrics>div{background:#050806;border-radius:6px;padding:12px;min-width:0}
+#bch-preview .history-metrics span,#bch-preview .history-eyebrow{color:var(--sub);font-size:11px;letter-spacing:.6px}
+#bch-preview .history-metrics strong{display:block;font-size:17px;color:var(--mint);margin-top:4px;font-variant-numeric:tabular-nums}
+#bch-preview .history-metrics p{font-size:11px;margin-top:5px}
+#bch-preview .history-columns{display:grid;grid-template-columns:1fr 1.1fr;gap:18px}
+#bch-preview .history-columns>div{min-width:0}
+#bch-preview .history-columns table{font-variant-numeric:tabular-nums;font-size:11px}
+#bch-preview .history-columns td,#bch-preview .history-columns th{padding:7px 6px}
+#bch-preview .history-columns tbody tr:nth-child(odd){background:#050806}
+#bch-preview .history-plot{background:#050806;border-radius:8px;padding:8px}
+#bch-preview .history-plot svg{height:315px}
+@media(max-width:720px){#bch-preview .history-columns{grid-template-columns:1fr}#bch-preview .history-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+
+#bch-preview .hunter-strip{position:relative;height:34px;border-radius:6px;background:linear-gradient(90deg,#1b1307,#070b09 65%);overflow:hidden;margin:8px 0}
+#bch-preview .hunter-spark{position:absolute;width:3px;height:3px;border-radius:50%;background:#ffcd4a;box-shadow:0 0 6px 2px #ffaa2470;transform:translate(-50%,-50%)}
+#bch-preview .hunter-last{position:absolute;top:7px;bottom:7px;width:3px;background:#ffbd45;box-shadow:0 0 10px 3px #ffa12350}
+#bch-preview .hunter-marker{position:absolute;width:2px}
+#bch-preview .hunter-axis{display:flex;justify-content:space-between;color:var(--sub);font-size:11px;margin-bottom:6px}
+</style></head><body><div id="bch-preview" aria-label="BCH solo dashboard concept">
+<style>
+#bch-preview{--bg:#000000;--panel:#101410;--ink:#ecf1fa;--sub:#9da9bd;--line:#25302b;--mint:#0ac18e;background:var(--bg);color:var(--ink);font:14px/1.5 system-ui,sans-serif;padding:26px;border-radius:16px}#bch-preview *{box-sizing:border-box}#bch-preview header,#bch-preview .heading,#bch-preview .row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}#bch-preview h2{font-size:23px;margin:0;font-weight:600}#bch-preview h3{font-size:14px;margin:0;font-weight:600}#bch-preview p{margin:4px 0;color:var(--sub);font-size:12px}#bch-preview .badge{color:var(--mint);background:color-mix(in srgb,var(--mint) 10%,var(--panel));padding:5px 9px;border-radius:5px;font-size:11px}#bch-preview .notice{margin:18px 0;color:var(--sub);font-size:12px}#bch-preview .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}#bch-preview .panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;min-width:0}#bch-preview .value{font-size:25px;font-weight:600;margin:8px 0 0;font-variant-numeric:tabular-nums}#bch-preview .label{color:var(--sub);font-size:12px}#bch-preview .grid{display:grid;grid-template-columns:1.4fr 1fr;gap:14px;margin-top:14px}#bch-preview button{background:transparent;border:1px solid var(--line);color:var(--sub);padding:6px 10px;border-radius:5px;font:inherit;font-size:12px}#bch-preview button[aria-pressed=true]{background:var(--mint);color:var(--bg);border-color:var(--mint)}#bch-preview svg{display:block;width:100%;height:200px;margin-top:10px;overflow:visible}#bch-preview svg text{fill:var(--sub);font:11px system-ui}#bch-preview .detail{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line);gap:12px;font-size:12px}#bch-preview .detail span{color:var(--sub)}#bch-preview .track{height:9px;background:var(--line);border-radius:9px;margin:16px 0;overflow:hidden}#bch-preview .track i{display:block;width:98.17%;height:100%;background:var(--mint)}#bch-preview table{width:100%;border-collapse:collapse;font-size:12px}#bch-preview td,#bch-preview th{text-align:left;padding:12px 7px;border-bottom:1px solid var(--line);white-space:nowrap}#bch-preview th{color:var(--sub);font-weight:400}#bch-preview .tablewrap{overflow:auto}#bch-preview .full{margin-top:14px}#bch-preview .empty{padding:24px 0;text-align:center;color:var(--sub)}@media(max-width:650px){#bch-preview{padding:14px}#bch-preview .stats{grid-template-columns:1fr 1fr}#bch-preview .grid{grid-template-columns:1fr}#bch-preview .value{font-size:21px}}
+</style>
+<header><div><p>YOUR NODE / BITCOIN CASH</p><h2>Solo mining dashboard</h2></div><div><span class="badge" id="connection">CONNECTING</span> </div></header>
+<p id="notice" role="status" style="margin:18px 0">Waiting for live stats…</p>
+<nav class="dashboard-nav" aria-label="Dashboard sections"><button type="button" data-tab="overview" aria-pressed="true" aria-controls="overview">Overview</button><button type="button" data-tab="block-page" aria-pressed="false" aria-controls="block-page">Blocks found</button></nav>
+<section id="overview" aria-label="Overview">
+<section class="stats" id="stats" style="grid-template-columns:repeat(2,minmax(0,1fr))"></section>
+<div class="grid"><section class="panel"><div class="heading"><h3>Hashrate history</h3><div id="ranges"><button aria-pressed="true" data-hours="1">1H</button> <button aria-pressed="false" data-hours="3">3H</button> <button aria-pressed="false" data-hours="24">24H</button></div></div><p>TH/s · saved pool history</p><svg id="hash-chart" role="img" aria-label="Hashrate history"></svg><p id="history-state"></p></section><section class="panel"><h3>Session health</h3><div id="health"></div></section></div>
+<section class="panel full"><h3>Worker performance</h3><p>Current connections · share counters are per connection</p><div class="tablewrap"><table><thead><tr><th>Worker</th><th>Hashrate · 5m</th><th>Best share</th><th>Accepted</th><th>Rejected</th><th>Last share</th></tr></thead><tbody id="workers"></tbody></table></div></section>
+<section class="panel full"><h3>Recent Share History</h3><div id="share-metrics" class="history-metrics"></div><div class="history-columns"><div><p class="history-eyebrow">RECENT ACCEPTED SHARES</p><div class="tablewrap"><table><thead><tr><th>Time</th><th>Rig</th><th>Difficulty</th><th>Network %</th></tr></thead><tbody id="share-log"></tbody></table></div></div><div><div class="heading"><div><p class="history-eyebrow">SHARE DIFFICULTY</p><strong id="share-peak" style="color:var(--mint);font-size:20px">—</strong></div><span class="badge">Latest 100</span></div><div class="history-plot"><svg id="share-chart" role="img" aria-label="Actual difficulty of recent accepted shares"></svg></div><p id="share-detail"></p><p>One bar per accepted share · linear scale · history resets on restart or worker reconnect.</p></div></div></section>
+<section class="panel full"><h3>Bitcoin Cash Block Hunter</h3><p id="hunter-status" style="color:#f2ba51;margin:10px 0">Waiting for stats</p><div id="hunter-strip" class="hunter-strip" role="img" aria-label="Logarithmic share difficulty comparison"></div><div class="hunter-axis"><span>Difficulty 1</span><span>Block target</span></div><div id="hunter-details"></div><p style="margin-top:12px">Logarithmic difficulty scale · each hash is a fresh attempt, not accumulated progress.</p></section>
+</section>
+<section id="block-page" aria-label="Blocks found" hidden><section class="panel"><h3>Blocks found</h3><div id="blocks"></div></section><section class="panel full"><h3>Solo mining outlook</h3><div id="odds"></div><p>Uses the 5-minute hashrate; assumes continuous mining and constant network difficulty. Not a countdown.</p></section></section>
+</div>
+<script>(()=>{'use strict';
+const root=document.getElementById('bch-preview'), $=id=>document.getElementById(id);
+let hours=1,points=[],lastGood=0,recentShares=[];
+const esc=v=>String(v??'—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num=v=>Number.isFinite(v)?v.toLocaleString(undefined,{maximumFractionDigits:2}):'—';
+function compact(v){if(!Number.isFinite(v))return '—';let u=0;while(v>=1000&&u<6){v/=1000;u++}return num(v)+' '+['','K','M','G','T','P','E'][u]}
+const hr=v=>compact(v)+'H/s', duration=v=>!Number.isFinite(v)?'—':v<60?Math.floor(v)+'s':v<3600?num(v/60)+'m':v<86400?num(v/3600)+'h':v<31557600?num(v/86400)+' days':num(v/31557600)+' years';
+const row=(k,v)=>'<div class="detail"><span>'+esc(k)+'</span><b>'+esc(v)+'</b></div>';
+const card=(k,v,n)=>'<div class="panel"><span class="label">'+esc(k)+'</span><div class="value">'+esc(v)+'</div><p>'+esc(n)+'</p></div>';
+async function get(path){const now=Date.now()/1000;
+if(path==='/history')return {points:Array.from({length:721},(_,i)=>[now-(720-i)*120,1.35e12+Math.sin(i*1.83)*3.6e11+Math.cos(i*.83)*2.4e11,.2,1])};
+return {generated:now,pool:{hashrate_1m:1.55e12,hashrate_5m:1.49e12,hashrate_1h:1.43e12,best_diff:652490,accepted:685,rejected:18,workers:1,accepted_session:101,rejected_session:0,total_hashes:4.3e15},node:{difficulty:494.34e9,node_reachable:true,node_ready:true,mode:'real',blocks:970000,coinbase_value:312500000,blocks_found:0,recent_blocks:[]},server:{uptime_s:5400,stratum_port:3334},miners:[{worker:'demo-worker',ip:'192.0.2.10',model:'Demo miner',hashrate_hps:1.49e12,best_diff:652490,accepted:101,rejected:0,last_share_ago:4,recent_share_difficulties:Array.from({length:100},(_,i)=>[now-(99-i)*18,5000+Math.abs(Math.sin(i*1.37))*90000+(i===73?550000:0)])}]};}
+function render(s){recentShares=s.miners.flatMap(m=>(m.recent_share_difficulties||[]).map(p=>({time:p[0],difficulty:p[1],worker:m.worker||'Unnamed'}))).filter(p=>Number.isFinite(p.time)&&Number.isFinite(p.difficulty)&&p.difficulty>0).sort((a,b)=>a.time-b.time).slice(-100);bars();const p=s.pool,n=s.node;const total=p.accepted+p.rejected,accept=total>0?num(100*p.accepted/total)+'%':'—';
+$('stats').innerHTML=card('Hashrate · 1 minute',hr(p.hashrate_1m),'5m '+hr(p.hashrate_5m)+' · 1h '+hr(p.hashrate_1h))+card('Connected workers',num(p.workers),'Process uptime '+duration(s.server.uptime_s));
+$('health').innerHTML=row('Node',!n.node_reachable?'Unreachable':n.node_ready?'Synced':'Syncing')+row('Mining mode',n.mode==='real'?'Live templates':'Mock — no real mining')+row('Accepted / rejected · current connections',num(p.accepted_session)+' / '+num(p.rejected_session))+row('Block height',num(n.blocks))+row('Stratum port',s.server.stratum_port)+row('Total hashes',compact(p.total_hashes)+'H');
+renderSharePanels(s);
+$('workers').innerHTML=s.miners.length?s.miners.map(m=>'<tr><td>'+esc(m.worker||'Unnamed')+'<p>'+esc(m.ip)+' · '+esc(m.model)+'</p></td><td>'+esc(hr(m.hashrate_hps))+'</td><td>'+esc(compact(m.best_diff))+'</td><td>'+esc(num(m.accepted))+'</td><td>'+esc(num(m.rejected))+'</td><td>'+esc(duration(m.last_share_ago))+'</td></tr>').join(''):'<tr><td colspan="6">No miners connected</td></tr>';
+const mean=n.difficulty>0&&p.hashrate_5m>0?n.difficulty*2**32/p.hashrate_5m:NaN;
+const probability=t=>Number.isFinite(mean)?(-Math.expm1(-t/mean)*100).toPrecision(3)+'%':'—';
+$('odds').innerHTML=row('Hashrate used · 5 minutes',hr(p.hashrate_5m))+row('Mean time to block',duration(mean))+row('Chance of ≥1 block · 24h',probability(86400))+row('Chance of ≥1 block · 1 year',probability(31557600))+row('Current template reward',n.coinbase_value!=null?(n.coinbase_value/1e8).toFixed(8)+' BCH':'—');
+$('blocks').innerHTML=row('Total found',num(n.blocks_found))+(n.recent_blocks?.length?n.recent_blocks.map(b=>row('Height '+b.height,b.status+' · '+(b.confirmations??'—')+' confirmations')).join(''):'<div class="empty">No blocks recorded yet</div>');
+}
+function chart(id,col,scale){
+const svg=$(id),w=svg.getBoundingClientRect().width||400,l=8,r=w-10,t=28,b=159,now=Date.now()/1000,start=now-hours*3600;
+svg.replaceChildren();svg.style.height='225px';
+const data=points.filter(p=>p[0]>=start&&p[0]<=now&&Number.isFinite(p[col]));
+const ns='http://www.w3.org/2000/svg';
+function el(tag,a,text,parent=svg){const e=document.createElementNS(ns,tag);Object.entries(a).forEach(([k,v])=>e.setAttribute(k,v));if(text!=null)e.textContent=text;parent.appendChild(e);return e}
+if(!data.length){el('text',{x:w/2,y:95,'text-anchor':'middle'},'No history in this range');return}
+const max=Math.max(...data.map(p=>p[col]/scale))*1.2||1,avg=data.reduce((a,p)=>a+p[col]/scale,0)/data.length;
+const x=p=>l+(p[0]-start)/(now-start)*(r-l),y=v=>b-v/max*(b-t);
+const defs=el('defs',{}),gradient=el('linearGradient',{id:'hash-fill',x1:0,y1:0,x2:0,y2:1},null,defs);
+el('stop',{offset:'0%','stop-color':'var(--mint)','stop-opacity':'.25'},null,gradient);el('stop',{offset:'100%','stop-color':'var(--mint)','stop-opacity':'0'},null,gradient);
+const glow=el('filter',{id:'hash-glow',x:'-30%',y:'-50%',width:'160%',height:'200%'},null,defs);el('feGaussianBlur',{stdDeviation:3},null,glow);
+for(let j=1;j<=3;j++)el('line',{x1:l,x2:r,y1:y(max*j/4),y2:y(max*j/4),stroke:'var(--line)','stroke-opacity':'.65'});
+el('text',{x:r,y:12,'text-anchor':'end'},'peak '+num(max/1.2)+' TH/s');
+const groups=[];data.forEach(p=>{const g=groups.at(-1);if(!g||p[0]-g.at(-1)[0]>660)groups.push([p]);else g.push(p)});
+groups.forEach(g=>{const d=g.map((p,i)=>(i?'L':'M')+x(p)+','+y(p[col]/scale)).join(' ');el('path',{d:d+' L'+x(g.at(-1))+','+b+' L'+x(g[0])+','+b+' Z',fill:'url(#hash-fill)'});el('path',{d,fill:'none',stroke:'var(--mint)','stroke-width':4,opacity:'.35',filter:'url(#hash-glow)'});el('path',{d,fill:'none',stroke:'var(--mint)','stroke-width':2,'stroke-linejoin':'round'})});
+el('line',{x1:l,x2:r,y1:y(avg),y2:y(avg),stroke:'var(--mint)','stroke-dasharray':'4 4',opacity:'.5'});
+const last=data.at(-1);el('circle',{cx:x(last),cy:y(last[col]/scale),r:8,fill:'var(--mint)',opacity:'.5',filter:'url(#hash-glow)'});el('circle',{cx:x(last),cy:y(last[col]/scale),r:4.5,fill:'var(--mint)'});
+el('text',{x:l,y:184},hours===1?'−60 min':'−'+hours+'h');el('text',{x:r,y:184,'text-anchor':'end'},'now');
+const avgLabel=el('text',{x:l,y:209},hours+'h avg '+num(avg)+' TH/s');avgLabel.style.fill='var(--mint)';
+const lastLabel=el('text',{x:r,y:209,'text-anchor':'end'},'latest '+num(last[col]/scale)+' TH/s');lastLabel.style.fill='var(--ink)';
+const hit=el('rect',{x:l,y:t,width:r-l,height:b-t,fill:'transparent'});
+const guide=el('line',{x1:l,x2:l,y1:t,y2:b,stroke:'var(--sub)',opacity:0,'pointer-events':'none'});
+hit.addEventListener('pointermove',e=>{const px=e.clientX-svg.getBoundingClientRect().left;const target=start+(px-l)/(r-l)*(now-start);const p=data.reduce((a,c)=>Math.abs(c[0]-target)<Math.abs(a[0]-target)?c:a);guide.setAttribute('x1',x(p));guide.setAttribute('x2',x(p));guide.setAttribute('opacity','.45');$('history-state').textContent=new Date(p[0]*1000).toLocaleTimeString()+' · '+num(p[col]/scale)+' TH/s'});
+hit.addEventListener('pointerleave',()=>{guide.setAttribute('opacity',0);$('history-state').textContent='Saved history · dashed line shows sample average'});
+}
+
+function bars(){
+const svg=$('share-chart'),w=svg.getBoundingClientRect().width||400,l=58,r=w-10,t=12,b=265;svg.replaceChildren();
+function el(tag,a,text){const e=document.createElementNS('http://www.w3.org/2000/svg',tag);Object.entries(a).forEach(([k,v])=>e.setAttribute(k,v));if(text!=null)e.textContent=text;svg.appendChild(e);return e}
+const peak=Math.max(0,...recentShares.map(p=>p.difficulty)),max=peak*1.08||1;
+for(let j=0;j<4;j++){const y=b-j*(b-t)/3;el('line',{x1:l,x2:r,y1:y,y2:y,stroke:'var(--line)'});el('text',{x:l-5,y:y+4,'text-anchor':'end'},compact(j*max/3))}
+if(!recentShares.length){el('text',{x:(l+r)/2,y:80,'text-anchor':'middle'},'Waiting for accepted shares');$('share-detail').textContent='New shares appear here automatically.';return}
+const step=(r-l)/recentShares.length;
+recentShares.forEach((p,i)=>{const height=p.difficulty/max*(b-t),bar=el('rect',{x:l+i*step+step*.1,y:b-height,width:Math.max(.5,step*.8),height,fill:'var(--mint)',style:'filter:drop-shadow(0 0 2px #0ac18e55)'});const label=new Date(p.time*1000).toLocaleTimeString()+' · '+p.worker+' · difficulty '+num(p.difficulty);const title=document.createElementNS('http://www.w3.org/2000/svg','title');title.textContent=label;bar.appendChild(title);bar.addEventListener('pointerenter',()=>{$('share-detail').textContent=label});bar.addEventListener('click',()=>{$('share-detail').textContent=label})});
+el('text',{x:l,y:291},new Date(recentShares[0].time*1000).toLocaleTimeString());el('text',{x:r,y:291,'text-anchor':'end'},'Latest');
+$('share-detail').textContent=recentShares.length+' accepted shares · highest '+compact(peak)+' · latest '+compact(recentShares.at(-1).difficulty);
+}
+function charts(){chart('hash-chart',1,1e12);bars()}
+async function tick(){try{const s=await get('/status');if(!s.pool||!s.node||!Array.isArray(s.miners))throw Error('Unsupported stats format');if(!Number.isFinite(s.generated)||Date.now()/1000-s.generated>30)throw Error('Pool stats are stale');render(s);lastGood=Date.now();$('connection').textContent='DEMO DATA';$('notice').textContent='Offline demonstration · all values are fictional · no mining connection';}catch(e){$('connection').textContent=lastGood?'STALE':'OFFLINE';$('notice').textContent='Live stats unavailable. '+(lastGood?'Last successful update '+new Date(lastGood).toLocaleTimeString()+'. ':'')+e.message}setTimeout(tick,5000)}
+async function history(){try{const h=await get('/history');if(!Array.isArray(h.points))throw Error('Unsupported history format');points=h.points.filter(p=>Array.isArray(p)&&Number.isFinite(p[0]));charts();$('history-state').textContent=points.length?points.length+' saved samples · latest '+new Date(points.at(-1)[0]*1000).toLocaleString():'History will appear as Forge collects samples.';}catch(e){$('history-state').textContent='History unavailable: '+e.message}setTimeout(history,60000)}
+root.querySelectorAll('[data-hours]').forEach(btn=>btn.addEventListener('click',()=>{hours=Number(btn.dataset.hours);root.querySelectorAll('[data-hours]').forEach(b=>b.setAttribute('aria-pressed',String(b===btn)));charts()}));new ResizeObserver(charts).observe(root);
+function renderSharePanels(s){
+const p=s.pool,n=s.node,total=p.accepted+p.rejected,last=recentShares.at(-1),peak=Math.max(0,...recentShares.map(v=>v.difficulty));
+const metrics=[['ACCEPT %',total?num(100*p.accepted/total)+'%':'—','all-time'],['TOTAL SHARES',num(total),'accepted + rejected · all-time'],['SESSION UPTIME',duration(s.server.uptime_s),'current process'],['BEST SHARE',compact(p.best_diff),'all-time'],['LATEST SHARE',last?compact(last.difficulty):'—','accepted']];
+$('share-metrics').innerHTML=metrics.map(([k,v,c])=>'<div><span>'+esc(k)+'</span><strong>'+esc(v)+'</strong><p>'+esc(c)+'</p></div>').join('');
+$('share-log').innerHTML=recentShares.slice(-12).reverse().map(v=>'<tr><td>'+esc(new Date(v.time*1000).toLocaleTimeString([], {hour12:false}))+'</td><td style="color:var(--mint)">'+esc(v.worker)+'</td><td>'+esc(compact(v.difficulty))+'</td><td>'+esc(n.difficulty>0?(v.difficulty/n.difficulty*100).toExponential(1)+'%':'—')+'</td></tr>').join('')||'<tr><td colspan="4">Waiting for accepted shares</td></tr>';
+$('share-peak').textContent=last?compact(peak)+' peak':'—';
+$('hunter-status').textContent=n.mode==='real'&&p.workers>0?'HUNTING':n.mode==='real'?'WAITING FOR MINER':'WAITING FOR LIVE TEMPLATES';
+const strip=$('hunter-strip');strip.replaceChildren();const position=d=>Math.max(0,Math.min(100,Math.log10(Math.max(1,d))/Math.log10(n.difficulty)*100));
+if(n.difficulty>1){recentShares.slice(-35).forEach((v,i)=>{const dot=document.createElement('span');dot.className='hunter-spark';dot.style.left=position(v.difficulty)+'%';dot.style.top=(18+(i*37)%65)+'%';dot.style.opacity=String(.3+(i%6)*.12);strip.append(dot)});
+if(last){const mark=document.createElement('span');mark.className='hunter-last';mark.style.left=position(last.difficulty)+'%';strip.append(mark)}
+for(const [d,color,top] of [[peak,'#f2ba51',0],[p.best_diff,'#b89afb',50],[n.difficulty,'#0ac18e',0]]){if(!(d>0))continue;const mark=document.createElement('span');mark.className='hunter-marker';mark.style.left=d===n.difficulty?'calc(100% - 2px)':position(d)+'%';mark.style.background=color;mark.style.boxShadow='0 0 7px '+color;mark.style.top=top+'%';mark.style.height=d===n.difficulty?'100%':'50%';strip.append(mark)}}
+$('hunter-details').innerHTML=[['Last share',last?compact(last.difficulty)+' · '+last.worker+' · '+duration(Math.max(0,Date.now()/1000-last.time))+' ago':'—','var(--ink)'],['Recent best · latest 100 shares',last?compact(peak):'—','#f2ba51'],['Lifetime best',compact(p.best_diff),'#b89afb'],['Block target',compact(n.difficulty),'var(--mint)']].map(([k,v,c])=>'<div class="detail"><span>'+esc(k)+'</span><b style="color:'+c+'">'+esc(v)+'</b></div>').join('');
+}
+root.querySelectorAll('[data-tab]').forEach(button=>button.addEventListener('click',()=>{root.querySelectorAll('[data-tab]').forEach(b=>{const selected=b===button;b.setAttribute('aria-pressed',String(selected));$(b.dataset.tab).hidden=!selected});requestAnimationFrame(charts)}));
+
+tick();history();
+})();
+</script></body></html>

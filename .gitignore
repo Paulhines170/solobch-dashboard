@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+Thumbs.db
+*.zip
+node_modules/
+.env
+config.json
+stats.json
+history.json
