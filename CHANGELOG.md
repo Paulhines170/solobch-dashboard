@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.1 — experimental
+
+- Fix compatibility fingerprint differences between Python 3.11 and newer versions.
+- Run installer, dashboard, and shell checks on Python 3.11, 3.12, and 3.13 in Linux CI.
+- Supersedes the initial 0.1.0 prerelease, whose installer compatibility check failed on Python 3.11.
+
 ## 0.1.0 — experimental
 
 - Overview and Blocks found tabs.
